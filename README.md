@@ -1,6 +1,6 @@
 # Upscayl Texture Upscaler
 
-A repository for upscaling textures and images using Upscayl, an AI-powered image upscaling tool that uses ECDSA to enhance image quality while preserving details.
+A repository for upscaling textures and images using Upscayl, an AI-powered image upscaling tool that uses neural networks to enhance image quality while preserving details.
 
 ## Features
 
