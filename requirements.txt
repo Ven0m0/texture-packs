@@ -1,0 +1,2 @@
+# Python dependencies for Upscayl Image Upscaler
+Pillow>=9.0.0  # For example image creation
