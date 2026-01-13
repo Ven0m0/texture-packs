@@ -25,8 +25,8 @@ install_upscayl_arch() {
         
         if command -v yay &> /dev/null; then
             AUR_HELPER="yay"
-        elif command -v pacman &> /dev/null; then
-            AUR_HELPER="pacman"
+        elif command -v yay &> /dev/null; then
+            AUR_HELPER="yay"
         else
             echo "No AUR helper found. Installing paru..."
             git clone https://aur.archlinux.org/paru.git
