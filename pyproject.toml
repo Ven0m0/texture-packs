@@ -1,0 +1,16 @@
+[project]
+name = "upscayl-texture-upscaler"
+version = "0.1.0"
+description = "A Python wrapper for Upscayl, an AI-powered image upscaling tool"
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "Pillow>=9.0.0",
+]
+
+[project.scripts]
+upscayl-py = "upscaler:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
