@@ -43,6 +43,6 @@ upscayl-desktop
 
 ## Requirements
 
-- Linux system with AUR support (for the current installation method)
+- Linux system (Debian/Ubuntu, Fedora, or Arch-based distributions are supported by the install script)
 - GPU with Vulkan support (optional, for faster processing)
 
