@@ -28,14 +28,10 @@ def find_images_in_directory(directory: Path, recursive: bool = False) -> List[P
     supported_formats = get_supported_formats()
     images = []
     
-    if recursive:
-        for ext in supported_formats:
-            images.extend(directory.rglob(f'*{ext}'))
-            images.extend(directory.rglob(f'*{ext.upper()}'))  # Also check uppercase
-    else:
-        for ext in supported_formats:
-            images.extend(directory.glob(f'*{ext}'))
-            images.extend(directory.glob(f'*{ext.upper()}'))  # Also check uppercase
+    glob_method = directory.rglob if recursive else directory.glob
+    for ext in supported_formats:
+        images.extend(glob_method(f'*{ext}'))
+        images.extend(glob_method(f'*{ext.upper()}'))  # Also check uppercase
     
     return images
 
