@@ -12,11 +12,27 @@ A repository for upscaling textures and images using Upscayl, an AI-powered imag
 
 ## Installation
 
+### Install Upscayl binary
+
 Run the setup script to install Upscayl and its dependencies:
 
 ```bash
 chmod +x setup.sh
 ./setup.sh
+```
+
+### Install Python dependencies
+
+This project uses UV for dependency management. Install the Python dependencies with:
+
+```bash
+uv sync
+```
+
+Or if you prefer to install manually:
+
+```bash
+uv pip install -e .
 ```
 
 ## Usage
