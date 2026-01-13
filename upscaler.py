@@ -119,7 +119,7 @@ def main():
         epilog="""
 Examples:
   %(prog)s -i image.jpg -o upscaled_image.jpg -s 2
-  %(prog)s -d /path/to/images -s 3 --gpu
+  %(prog)s -d /path/to/images -s 3
   %(prog)s -d /path/to/images -o /path/to/output -s 2 --recursive
         """
     )
