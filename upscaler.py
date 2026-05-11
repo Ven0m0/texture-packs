@@ -5,7 +5,6 @@ A Python wrapper for the Upscayl CLI tool that provides batch processing
 and easy-to-use options for upscaling images.
 """
 
-import os
 import sys
 import subprocess
 import argparse
