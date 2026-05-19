@@ -10,7 +10,7 @@ import sys
 import subprocess
 import argparse
 from pathlib import Path
-from typing import List, Optional
+from typing import List, Optional, Iterable
 
 
 def validate_scale_factor(scale: int) -> bool:
@@ -23,17 +23,14 @@ def get_supported_formats() -> List[str]:
     return ['.png', '.jpg', '.jpeg', '.webp', '.tga', '.bmp']
 
 
-def find_images_in_directory(directory: Path, recursive: bool = False) -> List[Path]:
+def find_images_in_directory(directory: Path, recursive: bool = False) -> Iterable[Path]:
     """Find all supported image files in a directory."""
     supported_formats = get_supported_formats()
-    images = []
     
     glob_method = directory.rglob if recursive else directory.glob
     for ext in supported_formats:
-        images.extend(glob_method(f'*{ext}'))
-        images.extend(glob_method(f'*{ext.upper()}'))  # Also check uppercase
-    
-    return images
+        yield from glob_method(f'*{ext}')
+        yield from glob_method(f'*{ext.upper()}')  # Also check uppercase
 
 
 def upscale_single_image(input_path: Path, output_path: Path, scale_factor: int, gpu: bool = True) -> bool:
@@ -81,23 +78,18 @@ def upscale_batch(input_dir: Path, output_dir: Optional[Path], scale_factor: int
     Returns:
         Number of successfully upscaled images
     """
-    images = find_images_in_directory(input_dir, recursive)
-    
-    if not images:
-        print(f"No supported images found in {input_dir}")
-        return 0
-    
     # Create output directory if specified and doesn't exist
     if output_dir:
         output_dir.mkdir(parents=True, exist_ok=True)
     
     success_count = 0
-    total_count = len(images)
+    processed_count = 0
     
-    print(f"Found {total_count} images to upscale...")
+    print(f"Searching for images in {input_dir}...")
     
-    for i, img_path in enumerate(images, 1):
-        print(f"Processing ({i}/{total_count}): {img_path.name}")
+    for img_path in find_images_in_directory(input_dir, recursive):
+        processed_count += 1
+        print(f"Processing image {processed_count}: {img_path.name}")
         
         # Determine output path
         if output_dir:
@@ -108,7 +100,11 @@ def upscale_batch(input_dir: Path, output_dir: Optional[Path], scale_factor: int
         if upscale_single_image(img_path, output_path, scale_factor, gpu):
             success_count += 1
     
-    print(f"\nCompleted! Successfully upscaled {success_count} out of {total_count} images.")
+    if processed_count == 0:
+        print(f"No supported images found in {input_dir}")
+        return 0
+
+    print(f"\nCompleted! Successfully upscaled {success_count} out of {processed_count} images.")
     return success_count
 
 
