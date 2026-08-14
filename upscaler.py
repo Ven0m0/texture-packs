@@ -13,14 +13,17 @@ from pathlib import Path
 from typing import List, Optional
 
 
+VALID_SCALE_FACTORS = frozenset({2, 3, 4})
+SUPPORTED_FORMATS = ['.png', '.jpg', '.jpeg', '.webp', '.tga', '.bmp']
+
 def validate_scale_factor(scale: int) -> bool:
     """Validate that scale factor is 2, 3, or 4."""
-    return scale in [2, 3, 4]
+    return scale in VALID_SCALE_FACTORS
 
 
 def get_supported_formats() -> List[str]:
     """Return list of supported image formats."""
-    return ['.png', '.jpg', '.jpeg', '.webp', '.tga', '.bmp']
+    return SUPPORTED_FORMATS
 
 
 def find_images_in_directory(directory: Path, recursive: bool = False) -> List[Path]:
