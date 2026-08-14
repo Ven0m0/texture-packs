@@ -25,15 +25,14 @@ def get_supported_formats() -> List[str]:
 
 def find_images_in_directory(directory: Path, recursive: bool = False) -> List[Path]:
     """Find all supported image files in a directory."""
-    supported_formats = get_supported_formats()
-    images = []
+    supported_formats = {ext.lower() for ext in get_supported_formats()}
     
-    glob_method = directory.rglob if recursive else directory.glob
-    for ext in supported_formats:
-        images.extend(glob_method(f'*{ext}'))
-        images.extend(glob_method(f'*{ext.upper()}'))  # Also check uppercase
+    iterator = directory.rglob('*') if recursive else directory.iterdir()
     
-    return images
+    return [
+        p for p in iterator
+        if p.is_file() and p.suffix.lower() in supported_formats
+    ]
 
 
 def upscale_single_image(input_path: Path, output_path: Path, scale_factor: int, gpu: bool = True) -> bool:
